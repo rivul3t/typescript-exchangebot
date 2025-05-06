@@ -1,24 +1,33 @@
-require('dotenv').config();
-const api_key = process.env.EXCHANGE_API_KEY;
+export abstract class ExchangeSource {
+    public abstract getExchangeRate(base: string, symbol: string): any;
+}
 
-export async function getExchangeRate(base: string, symbol: string): Promise<ExchangeApiResponse> {
+export class Exchangerates extends ExchangeSource {
+    constructor(private api_key: string) { super(); }
 
-    try {
-        const raw = await fetch(`https://api.exchangeratesapi.io/v1/latest?access_key=${api_key}&base=${base}&symbols=${symbol}`);
-        if (!raw.ok) {
-            throw new Error(`Response status: ${raw.status}`);
+    public async getExchangeRate(base: string, symbol: string): Promise<ExchangeApiResponse> {
+        const url: string = `https://api.exchangeratesapi.io/v1/latest?access_key=${this.api_key}&base=${base}&symbols=${symbol}`;
+
+        https://api.exchangeratesapi.io/v1/latest?access_key=49f3363ecf884d8b852c6c968e87fb4c
+        try {
+            console.log(url)
+
+            const raw = await fetch(url);
+            if (!raw.ok) {
+                throw new Error(`Response status: ${raw.status}`);
+            }
+
+            console.log(`GET EXCHANGE RATE FOR '${base}-${symbol}'`);
+            const json: ExchangeApiResponse = await raw.json();
+            console.log(`'${base}-${symbol}' is 1 : ${json.rates[symbol]}`);
+            return json;
+
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error(error.message);
+            }
+            throw error;
         }
-
-        console.log(`GET EXCHANGE RATE FOR '${base}-${symbol}'`);
-        const json: ExchangeApiResponse = await raw.json();
-        console.log(`'${base}-${symbol}' is 1 : ${json.rates[symbol]}`);
-        return json;
-
-    } catch (error) {
-        if (error instanceof Error) {
-            console.error(error.message);
-        }
-        throw error;
     }
 }
 
@@ -29,9 +38,3 @@ export interface ExchangeApiResponse {
     date: string;
     rates: Record<string, number>
 }
-
-getExchangeRate('EUR', 'USD')
-    .then((data) => console.log(data.rates['USD']))
-    .catch((error) => {
-    console.error(error.message);
-});

@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 export abstract class View {
     abstract getUnreadedMessage(): any;
     abstract sendMessage(message: string, chatId: number): any;
@@ -21,7 +19,6 @@ export class TelegramBotView extends View {
         const url = `https://api.telegram.org/bot${this.bot_api_key}/getUpdates?offset=${this.updateOffset}&timeout=${this.timeout}&limit=${limit}`;
         try {
             const response_raw = await fetch(url);
-            console.log(url);
             if (!response_raw.ok) {
                 throw new Error(`Response status: ${response_raw.status}`);
             }
@@ -29,8 +26,12 @@ export class TelegramBotView extends View {
             console.log('GET TELEGRAM UPDATE');
             const json = await response_raw.json();
             
-            this.updateOffset = json.result[0].updateId + 1;
-            
+            if (json.result) {
+                this.updateOffset = json.result[0].update_id + 1;
+                console.log(json.result[0].updateId);
+                console.log(this.updateOffset);
+            }
+
             return json;
         } catch (error) {
             if (error instanceof Error)

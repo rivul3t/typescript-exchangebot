@@ -1,19 +1,22 @@
-import { TelegramBotView, TelegramMessage } from "./telegramapi";
+import { TelegramBotView, TelegramMessage, View } from "./telegramapi";
 import { DefaultUserState, UserState } from "./userstate";
 import { CommandFactory } from "./commandFactory";
+import { ExchangeSource } from "./exchangeapi";
 
 export class Bot {
     public userStates: Record<string, UserState>;
-    public view: TelegramBotView;
+    public view: View;
+    public exchangeSource: ExchangeSource;
     public commandFactory: CommandFactory;
 
-    constructor(userStates: Record<string, UserState>, view: TelegramBotView, commandFactory: CommandFactory) {
+    constructor(userStates: Record<string, UserState>, view: View, exchangeSourse: ExchangeSource) {
         this.userStates = userStates;
         this.view = view;
-        this.commandFactory = commandFactory;
+        this.exchangeSource = exchangeSourse;
+        this.commandFactory = new CommandFactory(this);
     }
 
-    public async startBot() {
+    public async start() {
         while (true) {
             try {
                 const messageInfo: TelegramMessage = await this.view.getUnreadedMessage();
@@ -31,8 +34,9 @@ export class Bot {
                     this.userStates[chatId].handleMessage(message);
                 }
             } catch (error) {
-                
+                console.log('aboba');
             }
+            setTimeout(() => (console.log("a")), 3000)
         }
     }
 }

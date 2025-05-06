@@ -58,10 +58,10 @@ export class TelegramBotView extends View {
         }
     }
 
-    async getUnreadedMessage(): Promise<string> {
+    async getUnreadedMessage(): Promise<TelegramMessage> {
         try {
             let updates = await this.getTelegramUpdates(1);
-            return updates.result[0].message.text;
+            return updates.result[0].message;
         } catch (error) {
             if (error instanceof Error)
                 console.error(error.message)
@@ -72,15 +72,15 @@ export class TelegramBotView extends View {
 
 export interface TelegramResponse {
     ok: string;
-    result: [TelegramUpdateInfo]
+    result: [TelegramInfo]
 }
 
-interface TelegramUpdateInfo {
+interface TelegramInfo {
     updateId: number;
-    message: TelegramUpdateMessage;
+    message: TelegramMessage;
 }
 
-interface TelegramUpdateMessage {
+export interface TelegramMessage {
     messageId: number;
     from: TelegramUser;
     chat: TelegramChat;

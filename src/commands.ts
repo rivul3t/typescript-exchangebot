@@ -1,5 +1,5 @@
 import { Bot } from "./bot";
-import { TelegramBotView, TelegramResponse } from "./telegramapi";
+import { TelegramResponse } from "./telegramapi";
 import { SendingCurrencyUserState, DefaultUserState } from "./userstate";
 
 export interface BotCommand {
@@ -10,7 +10,7 @@ export class StartCommand implements BotCommand {
     constructor(private bot: Bot, private chatId: number) {}
 
     async execute(): Promise <TelegramResponse> {
-        const response = await this.bot.view.sendMessage('Привет, я миниботик. Отправь /currency и я дам тебе курс валюты, который ты захочешь', this.chatId)
+        const response = await this.bot.view.sendMessage('Привет, я миниботик. Отправь  /currency и я дам тебе курс валюты, который ты захочешь', this.chatId)
         return response;
     }
 }

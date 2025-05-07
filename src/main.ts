@@ -1,12 +1,14 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
 import { Bot } from "./bot";
 import { UserState } from "./userstate";
 import { TelegramBotView } from "./telegramapi";
 import { Exchangerates } from "./exchangeratesApi";
 
+dotenv.config();
+
 const exchange_api_key = process.env.EXCHANGE_API_KEY as string;
 const telegram_bot_api_key = process.env.TELEGRAM_BOT_API_KEY as string;
-const telegram_timeout_polling = process.env.TELEGRAM_TIMEOUT_POLLING as string;
+const telegram_timeout_polling = process.env.TELEGRAM_TIMEOUT_POLLING || '5';
 
 
 

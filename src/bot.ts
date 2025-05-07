@@ -22,6 +22,11 @@ export class Bot {
         while (true) {
             try {
                 const messageInfo: TelegramMessage = await this.view.getUnreadedMessage();
+                if (messageInfo === null) {
+                    setTimeout(() => {}, 5000);
+                    continue;
+                }
+                
                 const chatId: number = messageInfo.chat.id;
                 const message: string = messageInfo.text;
 
@@ -29,7 +34,7 @@ export class Bot {
                     this.userStates[chatId] = new DefaultUserState(this, chatId);
                 }
 
-                let command: BotCommand | null = this.commandFactory.parseCommand(message, chatId);
+                const command: BotCommand | null = this.commandFactory.parseCommand(message, chatId);
                 if (command) {
                     command.execute();
                 } else {
@@ -38,7 +43,6 @@ export class Bot {
             } catch (error) {
                 console.log(error);
             }
-            setTimeout(() => (console.log("----------------------------------")), 3000)
         }
     }
 }

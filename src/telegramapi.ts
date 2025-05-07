@@ -21,9 +21,9 @@ export class TelegramBotView extends View {
         }
 
         console.log('GET TELEGRAM UPDATE');
-        const json = await response_raw.json();
+        const json: TelegramResponse = await response_raw.json();
         
-        if (json.result) {
+        if (json.result.length > 0) {
             this.updateOffset = json.result[0].update_id + 1;
         }
         return json;
@@ -33,19 +33,23 @@ export class TelegramBotView extends View {
     public async sendMessage(message: string, chatId: number) {
         const url = `https://api.telegram.org/bot${this.bot_api_key}/sendMessage?chat_id=${chatId}&text=${message}`;
         const response_raw = await fetch(url);
-        console.log(url);
         if (!response_raw.ok) {
             throw new Error(`Response status: ${response_raw.status}`);
         }
 
         console.log(`SEND TELEGRAM MESSAGE '${message}' TO CHAT ${chatId}`);
-        const json = await response_raw.json();
+        const json: TelegramResponse = await response_raw.json();
         return json;
     }
 
-    async getUnreadedMessage(): Promise<TelegramMessage> {
-        let updates = await this.getTelegramUpdates(1);
-        return updates.result[0].message;
+    async getUnreadedMessage(): Promise<TelegramMessage | null> {
+        const updates: TelegramResponse = await this.getTelegramUpdates(1);
+        if (updates.result.length > 0) {
+            return updates.result[0].message;
+        } else {
+            return null;
+        }
+        
     }
 }
 

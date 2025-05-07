@@ -1,6 +1,6 @@
 import { Bot } from "./bot";
 import { TelegramBotView, TelegramResponse } from "./telegramapi";
-import { SendindCurrencyUserState, DefaultUserState } from "./userstate";
+import { SendingCurrencyUserState, DefaultUserState } from "./userstate";
 
 export interface BotCommand {
     execute(): Promise <TelegramResponse>;
@@ -20,7 +20,7 @@ export class CurrencyCommand implements BotCommand {
 
     async execute(): Promise <TelegramResponse> {
         const response = await this.bot.view.sendMessage('Укажи валюту в формате ВАЛЮТА-ВАЛЮТА', this.chatId);
-        this.bot.userStates[this.chatId] = new SendindCurrencyUserState(this.bot, this.chatId);
+        this.bot.userStates[this.chatId] = new SendingCurrencyUserState(this.bot, this.chatId);
         return response;
     }
 }

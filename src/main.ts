@@ -2,7 +2,7 @@ require('dotenv').config();
 import { Bot } from "./bot";
 import { UserState } from "./userstate";
 import { TelegramBotView } from "./telegramapi";
-import { Exchangerates, ExchangeSource } from "./exchangeapi";
+import { Exchangerates } from "./exchangeratesApi";
 
 const exchange_api_key = process.env.EXCHANGE_API_KEY as string;
 const telegram_bot_api_key = process.env.TELEGRAM_BOT_API_KEY as string;

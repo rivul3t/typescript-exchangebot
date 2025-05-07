@@ -1,7 +1,9 @@
-import { TelegramBotView, TelegramMessage, View } from "./telegramapi";
+import { View } from "./messengerClass";
+import { TelegramMessage } from "./telegramapi";
 import { DefaultUserState, UserState } from "./userstate";
 import { CommandFactory } from "./commandFactory";
-import { ExchangeSource } from "./exchangeapi";
+import { BotCommand } from "./commands";
+import { ExchangeSource } from "./ExchangeSourceClass";
 
 export class Bot {
     public userStates: Record<string, UserState>;
@@ -27,16 +29,16 @@ export class Bot {
                     this.userStates[chatId] = new DefaultUserState(this, chatId);
                 }
 
-                let command = this.commandFactory.parseCommand(message, chatId);
+                let command: BotCommand | null = this.commandFactory.parseCommand(message, chatId);
                 if (command) {
                     command.execute();
                 } else {
                     this.userStates[chatId].handleMessage(message);
                 }
             } catch (error) {
-                console.log('aboba');
+                console.log(error);
             }
-            setTimeout(() => (console.log("a")), 3000)
+            setTimeout(() => (console.log("----------------------------------")), 3000)
         }
     }
 }

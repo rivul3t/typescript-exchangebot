@@ -1,14 +1,12 @@
 {
-"compilerOptions": {
+  "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

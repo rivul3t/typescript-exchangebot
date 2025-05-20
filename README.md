@@ -57,10 +57,10 @@ The bot will respond with the current EUR → USD exchange rate.
 
 📂 Project Structure
 
-.
+.  
 ├── src/
-│ └── main.ts # Main entry point for the bot
-├── dist/ # Compiled JS files
-├── .env # API keys and configuration
-├── package.json
-└── tsconfig.json
+│ └── main.ts # Main entry point for the bot  
+├── dist/ # Compiled JS files  
+├── .env # Configuration  
+├── package.json  
+└── tsconfig.json  

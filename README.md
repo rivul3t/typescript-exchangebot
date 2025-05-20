@@ -16,7 +16,7 @@ A simple Telegram bot that provides currency exchange rates using ExchangeRatesA
 
     Clone the repo
 
-git clone https://github.com/your-username/simple-currency-bot.git
+git clone https://github.com/rivul3t/typescript-exchangebot.git
 cd simple-currency-bot
 
 Install dependencies

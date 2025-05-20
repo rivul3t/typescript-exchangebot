@@ -14,27 +14,27 @@ A simple Telegram bot that provides currency exchange rates using ExchangeRatesA
 
 🔧 Setup
 
-    Clone the repo
+Clone the repo
 
-git clone https://github.com/rivul3t/typescript-exchangebot.git
-cd simple-currency-bot
+    git clone https://github.com/rivul3t/typescript-exchangebot.git
+    cd simple-currency-bot
 
 Install dependencies
 
-npm install
+    npm install
 
 Create a .env file in the project root and add the following:
 
-EXCHANGE_API_KEY=your_exchange_api_key
-TELEGRAM_BOT_API_KEY=your_telegram_bot_api_key
+    EXCHANGE_API_KEY=your_exchange_api_key
+    TELEGRAM_BOT_API_KEY=your_telegram_bot_api_key
 
-# Optional
+    # Optional
 
-TELEGRAM_TIMEOUT_POLLING=300
+    TELEGRAM_TIMEOUT_POLLING=300
 
 Compile TypeScript
 
-tsc
+    tsc
 
 Start the bot
 
@@ -44,7 +44,9 @@ Start the bot
 
 Send a message to your bot in the format:
 
-/rate USD
+    /currency
+    EUR-USD
+
 
 The bot will respond with the current EUR → USD exchange rate.
 📌 Limitations
